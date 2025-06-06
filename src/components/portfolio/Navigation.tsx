@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 
 interface NavigationProps {
@@ -14,7 +13,6 @@ const Navigation = ({ currentSection, onNavigate, sections }: NavigationProps) =
     { id: 'resume', label: 'Resume' },
     { id: 'projects', label: 'Projects' },
     { id: 'skills', label: 'Skills' },
-    { id: 'articles', label: 'Articles' },
     { id: 'coding', label: 'Coding' },
     { id: 'contact', label: 'Contact' },
   ];

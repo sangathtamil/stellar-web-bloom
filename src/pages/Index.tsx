@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Hero from '../components/portfolio/Hero';
@@ -7,7 +6,6 @@ import Resume from '../components/portfolio/Resume';
 import Projects from '../components/portfolio/Projects';
 import Skills from '../components/portfolio/Skills';
 import Contact from '../components/portfolio/Contact';
-import Articles from '../components/portfolio/Articles';
 import CodingProfiles from '../components/portfolio/CodingProfiles';
 import SocialLinks from '../components/portfolio/SocialLinks';
 import Navigation from '../components/portfolio/Navigation';
@@ -21,7 +19,6 @@ const sections = [
   { id: 'resume', component: Resume },
   { id: 'projects', component: Projects },
   { id: 'skills', component: Skills },
-  { id: 'articles', component: Articles },
   { id: 'coding', component: CodingProfiles },
   { id: 'contact', component: Contact },
 ];
