@@ -1,18 +1,19 @@
 
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
-import { Box, Float } from '@react-three/drei';
+import { Float } from '@react-three/drei';
 import { Suspense, useState } from 'react';
 
 const ResumeCard3D = ({ isHovered }: { isHovered: boolean }) => (
   <Float speed={1} rotationIntensity={isHovered ? 1 : 0.2} floatIntensity={isHovered ? 2 : 0.5}>
-    <Box args={[1.5, 2, 0.05]} position={[0, 0, 0]}>
+    <mesh position={[0, 0, 0]}>
+      <boxGeometry args={[1.5, 2, 0.05]} />
       <meshStandardMaterial 
         color={isHovered ? "#3b82f6" : "#f8fafc"} 
         transparent 
         opacity={0.9} 
       />
-    </Box>
+    </mesh>
   </Float>
 );
 
@@ -46,9 +47,9 @@ const Resume = () => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            <Canvas camera={{ position: [0, 0, 4] }}>
+            <Canvas camera={{ position: [0, 0, 4], fov: 75 }}>
               <ambientLight intensity={0.6} />
-              <pointLight position={[10, 10, 10]} />
+              <pointLight position={[10, 10, 10]} intensity={1} />
               <Suspense fallback={null}>
                 <ResumeCard3D isHovered={isHovered} />
               </Suspense>

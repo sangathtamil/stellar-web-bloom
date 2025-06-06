@@ -1,15 +1,15 @@
-
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
-import { Float, OrbitControls, Box } from '@react-three/drei';
+import { Float, OrbitControls } from '@react-three/drei';
 import { Suspense } from 'react';
 
 const Hero3D = () => {
   return (
     <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <Box args={[2, 2, 2]}>
+      <mesh>
+        <boxGeometry args={[2, 2, 2]} />
         <meshNormalMaterial />
-      </Box>
+      </mesh>
     </Float>
   );
 };
@@ -45,9 +45,9 @@ const Hero = () => {
       
       {/* 3D Canvas */}
       <div className="absolute right-10 top-1/2 -translate-y-1/2 w-64 h-64 hidden lg:block">
-        <Canvas camera={{ position: [0, 0, 5] }}>
+        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
           <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} />
+          <pointLight position={[10, 10, 10]} intensity={1} />
           <Suspense fallback={null}>
             <Hero3D />
           </Suspense>

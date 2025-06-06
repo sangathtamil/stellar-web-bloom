@@ -1,19 +1,19 @@
-
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
-import { Box, Float } from '@react-three/drei';
+import { Float } from '@react-three/drei';
 import { Suspense, useState } from 'react';
 import { Github } from 'lucide-react';
 
 const ProjectCard3D = ({ isHovered }: { isHovered: boolean }) => (
   <Float speed={2} rotationIntensity={isHovered ? 2 : 0.5} floatIntensity={isHovered ? 3 : 1}>
-    <Box args={[2, 1.2, 0.1]} position={[0, 0, 0]}>
+    <mesh position={[0, 0, 0]}>
+      <boxGeometry args={[2, 1.2, 0.1]} />
       <meshStandardMaterial 
         color={isHovered ? "#3b82f6" : "#1f2937"} 
         transparent 
         opacity={0.8} 
       />
-    </Box>
+    </mesh>
   </Float>
 );
 
@@ -79,9 +79,9 @@ const Projects = () => {
                 {/* 3D Element */}
                 <div className="relative h-48 overflow-hidden">
                   <div className="absolute inset-0">
-                    <Canvas camera={{ position: [0, 0, 3] }}>
+                    <Canvas camera={{ position: [0, 0, 3], fov: 75 }}>
                       <ambientLight intensity={0.6} />
-                      <pointLight position={[10, 10, 10]} />
+                      <pointLight position={[10, 10, 10]} intensity={1} />
                       <Suspense fallback={null}>
                         <ProjectCard3D isHovered={hoveredProject === index} />
                       </Suspense>
