@@ -17,7 +17,7 @@ const SkillSphere = ({ skill, position, color }: { skill: string, position: [num
   return (
     <Float speed={2} rotationIntensity={1} floatIntensity={2}>
       <mesh ref={meshRef} position={position}>
-        <sphereGeometry args={[0.8, 32, 32]} />
+        <sphereGeometry args={[0.8, 16, 16]} />
         <meshStandardMaterial color={color} transparent opacity={0.7} />
       </mesh>
     </Float>
@@ -70,13 +70,13 @@ const Skills = () => {
 
         {/* 3D Skills Sphere */}
         <div className="relative h-96 mb-16">
-          <Canvas camera={{ position: [0, 0, 8] }}>
+          <Canvas camera={{ position: [0, 0, 8], fov: 75 }}>
             <ambientLight intensity={0.6} />
-            <pointLight position={[10, 10, 10]} />
+            <pointLight position={[10, 10, 10]} intensity={1} />
             <Suspense fallback={null}>
               {sphereSkills.map((skill, index) => (
                 <SkillSphere 
-                  key={skill.name}
+                  key={`${skill.name}-${index}`}
                   skill={skill.name}
                   position={skill.position}
                   color={skill.color}
