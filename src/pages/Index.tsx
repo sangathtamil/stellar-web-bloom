@@ -12,6 +12,7 @@ import CodingProfiles from '../components/portfolio/CodingProfiles';
 import SocialLinks from '../components/portfolio/SocialLinks';
 import Navigation from '../components/portfolio/Navigation';
 import ParticleBackground from '../components/portfolio/ParticleBackground';
+import ErrorBoundary from '../components/ErrorBoundary';
 import { useToast } from '@/hooks/use-toast';
 
 const sections = [
@@ -82,7 +83,24 @@ const Index = () => {
           }}
           className="min-h-screen flex items-center justify-center"
         >
-          {currentComponent && React.createElement(currentComponent)}
+          <ErrorBoundary
+            fallback={
+              <div className="text-center">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                  Section Temporarily Unavailable
+                </h2>
+                <p className="text-gray-400 mb-6">This section is experiencing technical difficulties.</p>
+                <button 
+                  onClick={() => navigateToSection(0)}
+                  className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                  Return to Home
+                </button>
+              </div>
+            }
+          >
+            {currentComponent && React.createElement(currentComponent)}
+          </ErrorBoundary>
         </motion.div>
       </AnimatePresence>
       
