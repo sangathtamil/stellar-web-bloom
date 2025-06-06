@@ -52,13 +52,13 @@ const Skills = () => {
     }
   ];
 
-  const sphereSkills = [
+  const sphereSkills: Array<{ name: string; position: [number, number, number]; color: string }> = [
     { name: "React", position: [-2, 2, 0], color: "#61dafb" },
     { name: "Node.js", position: [2, 1, -1], color: "#68a063" },
     { name: "Python", position: [0, -2, 1], color: "#3776ab" },
     { name: "AWS", position: [-1, 0, 2], color: "#ff9900" },
     { name: "Docker", position: [1, -1, -2], color: "#2496ed" },
-  ] as const;
+  ];
 
   return (
     <div className="min-h-screen flex items-center justify-center py-20">
