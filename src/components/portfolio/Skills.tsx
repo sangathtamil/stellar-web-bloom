@@ -1,28 +1,5 @@
 
 import { motion } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
-import { Suspense, useRef } from 'react';
-import * as THREE from 'three';
-
-const SkillSphere = ({ skill, position, color }: { skill: string, position: [number, number, number], color: string }) => {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
-    }
-  });
-
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <mesh ref={meshRef} position={position}>
-        <sphereGeometry args={[0.8, 16, 16]} />
-        <meshStandardMaterial color={color} transparent opacity={0.7} />
-      </mesh>
-    </Float>
-  );
-};
 
 const Skills = () => {
   const skillCategories = [
@@ -43,12 +20,12 @@ const Skills = () => {
     }
   ];
 
-  const sphereSkills: Array<{ name: string; position: [number, number, number]; color: string }> = [
-    { name: "React", position: [-2, 2, 0], color: "#61dafb" },
-    { name: "Node.js", position: [2, 1, -1], color: "#68a063" },
-    { name: "Python", position: [0, -2, 1], color: "#3776ab" },
-    { name: "AWS", position: [-1, 0, 2], color: "#ff9900" },
-    { name: "Docker", position: [1, -1, -2], color: "#2496ed" },
+  const featuredSkills = [
+    { name: "React", color: "#61dafb" },
+    { name: "Node.js", color: "#68a063" },
+    { name: "Python", color: "#3776ab" },
+    { name: "AWS", color: "#ff9900" },
+    { name: "Docker", color: "#2496ed" },
   ];
 
   return (
@@ -68,34 +45,58 @@ const Skills = () => {
           </p>
         </motion.div>
 
-        {/* 3D Skills Sphere */}
-        <div className="relative h-96 mb-16">
-          <Canvas camera={{ position: [0, 0, 8], fov: 75 }}>
-            <ambientLight intensity={0.6} />
-            <pointLight position={[10, 10, 10]} intensity={1} />
-            <Suspense fallback={null}>
-              {sphereSkills.map((skill, index) => (
-                <SkillSphere 
-                  key={`${skill.name}-${index}`}
-                  skill={skill.name}
-                  position={skill.position}
-                  color={skill.color}
-                />
-              ))}
-            </Suspense>
-          </Canvas>
-          
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          >
-            <div className="text-center text-gray-400">
-              <p className="mb-2">Interactive 3D Skills</p>
-              <p className="text-sm">Drag to rotate • Scroll to zoom</p>
-            </div>
-          </motion.div>
+        {/* Featured Skills Animation */}
+        <div className="relative h-96 mb-16 flex items-center justify-center">
+          <div className="relative w-80 h-80">
+            {featuredSkills.map((skill, index) => {
+              const angle = (index * 360) / featuredSkills.length;
+              const radius = 120;
+              const x = Math.cos((angle * Math.PI) / 180) * radius;
+              const y = Math.sin((angle * Math.PI) / 180) * radius;
+              
+              return (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1,
+                    rotate: [0, 360]
+                  }}
+                  transition={{ 
+                    delay: index * 0.2,
+                    duration: 0.8,
+                    rotate: {
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }
+                  }}
+                  className="absolute w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg"
+                  style={{
+                    backgroundColor: skill.color,
+                    left: `calc(50% + ${x}px - 32px)`,
+                    top: `calc(50% + ${y}px - 32px)`,
+                  }}
+                  whileHover={{ scale: 1.2, zIndex: 10 }}
+                >
+                  {skill.name.slice(0, 3)}
+                </motion.div>
+              );
+            })}
+            
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <div className="text-center text-gray-400 bg-gray-900/80 backdrop-blur-sm rounded-xl p-4">
+                <p className="mb-2 font-semibold">Featured Technologies</p>
+                <p className="text-sm">Hover to explore</p>
+              </div>
+            </motion.div>
+          </div>
         </div>
 
         {/* Skills Categories */}
