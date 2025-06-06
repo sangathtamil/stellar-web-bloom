@@ -1,7 +1,7 @@
 
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Text, Float } from '@react-three/drei';
+import { Float } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -19,15 +19,6 @@ const SkillSphere = ({ skill, position, color }: { skill: string, position: [num
       <mesh ref={meshRef} position={position}>
         <sphereGeometry args={[0.8, 32, 32]} />
         <meshStandardMaterial color={color} transparent opacity={0.7} />
-        <Text
-          position={[0, 0, 0.9]}
-          fontSize={0.2}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {skill}
-        </Text>
       </mesh>
     </Float>
   );
