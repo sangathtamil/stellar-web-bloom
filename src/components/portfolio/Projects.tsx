@@ -1,21 +1,7 @@
-import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
-import { Suspense, useState } from 'react';
-import { Github } from 'lucide-react';
 
-const ProjectCard3D = ({ isHovered }: { isHovered: boolean }) => (
-  <Float speed={2} rotationIntensity={isHovered ? 2 : 0.5} floatIntensity={isHovered ? 3 : 1}>
-    <mesh position={[0, 0, 0]}>
-      <boxGeometry args={[2, 1.2, 0.1]} />
-      <meshStandardMaterial 
-        color={isHovered ? "#3b82f6" : "#1f2937"} 
-        transparent 
-        opacity={0.8} 
-      />
-    </mesh>
-  </Float>
-);
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Github } from 'lucide-react';
 
 const Projects = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -76,17 +62,16 @@ const Projects = () => {
               className="group relative"
             >
               <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all duration-500">
-                {/* 3D Element */}
+                {/* CSS 3D Element */}
                 <div className="relative h-48 overflow-hidden">
-                  <div className="absolute inset-0">
-                    <Canvas camera={{ position: [0, 0, 3], fov: 75 }}>
-                      <ambientLight intensity={0.6} />
-                      <pointLight position={[10, 10, 10]} intensity={1} />
-                      <Suspense fallback={null}>
-                        <ProjectCard3D isHovered={hoveredProject === index} />
-                      </Suspense>
-                    </Canvas>
-                  </div>
+                  <motion.div
+                    animate={{ 
+                      rotateY: hoveredProject === index ? [0, 5, -5, 0] : 0,
+                      scale: hoveredProject === index ? 1.02 : 1
+                    }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-2 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg opacity-20"
+                  />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-300" />
                   <img 
                     src={project.image} 

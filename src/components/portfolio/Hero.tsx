@@ -1,18 +1,5 @@
-import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { Float, OrbitControls } from '@react-three/drei';
-import { Suspense } from 'react';
 
-const Hero3D = () => {
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <mesh>
-        <boxGeometry args={[2, 2, 2]} />
-        <meshNormalMaterial />
-      </mesh>
-    </Float>
-  );
-};
+import { motion } from 'framer-motion';
 
 const Hero = () => {
   const containerVariants = {
@@ -43,16 +30,22 @@ const Hero = () => {
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-black" />
       
-      {/* 3D Canvas */}
+      {/* CSS 3D Cube */}
       <div className="absolute right-10 top-1/2 -translate-y-1/2 w-64 h-64 hidden lg:block">
-        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
-          <Suspense fallback={null}>
-            <Hero3D />
-          </Suspense>
-          <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
-        </Canvas>
+        <div className="relative w-full h-full perspective-1000">
+          <motion.div
+            animate={{ rotateX: [0, 360], rotateY: [0, 360] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="w-32 h-32 mx-auto mt-16 transform-style-preserve-3d"
+          >
+            <div className="absolute w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 opacity-80" style={{ transform: 'translateZ(64px)' }} />
+            <div className="absolute w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-600 opacity-80" style={{ transform: 'rotateY(90deg) translateZ(64px)' }} />
+            <div className="absolute w-32 h-32 bg-gradient-to-br from-cyan-500 to-blue-600 opacity-80" style={{ transform: 'rotateY(180deg) translateZ(64px)' }} />
+            <div className="absolute w-32 h-32 bg-gradient-to-br from-green-500 to-cyan-600 opacity-80" style={{ transform: 'rotateY(-90deg) translateZ(64px)' }} />
+            <div className="absolute w-32 h-32 bg-gradient-to-br from-yellow-500 to-green-600 opacity-80" style={{ transform: 'rotateX(90deg) translateZ(64px)' }} />
+            <div className="absolute w-32 h-32 bg-gradient-to-br from-red-500 to-yellow-600 opacity-80" style={{ transform: 'rotateX(-90deg) translateZ(64px)' }} />
+          </motion.div>
+        </div>
       </div>
 
       <motion.div 

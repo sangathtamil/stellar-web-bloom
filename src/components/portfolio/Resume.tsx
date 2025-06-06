@@ -1,21 +1,6 @@
 
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
-import { Suspense, useState } from 'react';
-
-const ResumeCard3D = ({ isHovered }: { isHovered: boolean }) => (
-  <Float speed={1} rotationIntensity={isHovered ? 1 : 0.2} floatIntensity={isHovered ? 2 : 0.5}>
-    <mesh position={[0, 0, 0]}>
-      <boxGeometry args={[1.5, 2, 0.05]} />
-      <meshStandardMaterial 
-        color={isHovered ? "#3b82f6" : "#f8fafc"} 
-        transparent 
-        opacity={0.9} 
-      />
-    </mesh>
-  </Float>
-);
+import { useState } from 'react';
 
 const Resume = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -38,22 +23,35 @@ const Resume = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* 3D Resume Card */}
+          {/* CSS Resume Card */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative h-96"
+            className="relative h-96 flex items-center justify-center"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            <Canvas camera={{ position: [0, 0, 4], fov: 75 }}>
-              <ambientLight intensity={0.6} />
-              <pointLight position={[10, 10, 10]} intensity={1} />
-              <Suspense fallback={null}>
-                <ResumeCard3D isHovered={isHovered} />
-              </Suspense>
-            </Canvas>
+            <motion.div
+              animate={{ 
+                rotateY: isHovered ? [0, 5, -5, 0] : 0,
+                scale: isHovered ? 1.05 : 1
+              }}
+              transition={{ duration: 0.5 }}
+              className="w-64 h-80 bg-gradient-to-br from-gray-100 to-gray-300 rounded-lg shadow-2xl flex flex-col items-center justify-center text-gray-800 relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+              <div className="mt-8 text-center px-6">
+                <div className="w-16 h-16 bg-gray-400 rounded-full mx-auto mb-4"></div>
+                <div className="h-4 bg-gray-400 rounded mb-2"></div>
+                <div className="h-3 bg-gray-300 rounded mb-4"></div>
+                <div className="space-y-2">
+                  <div className="h-2 bg-gray-300 rounded"></div>
+                  <div className="h-2 bg-gray-300 rounded"></div>
+                  <div className="h-2 bg-gray-300 rounded w-3/4"></div>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Resume Information */}
